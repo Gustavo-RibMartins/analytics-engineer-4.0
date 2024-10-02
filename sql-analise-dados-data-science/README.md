@@ -41,3 +41,27 @@ Quando terminar os estudos, destrua a infraestrutura com o seguinte comando:
 ```bash
 terraform destroy --auto-approve
 ```
+
+---
+
+## Teoria
+
+### Anatomia de uma Query SQL
+
+**Plano de Execução de uma Query**: procedimento/sequência a ser executada (anatomia) em uma query;
+
+* FROM
+* ON
+* JOIN
+* WHERE
+* GROUP BY
+* WITH CUBE OU WITH ROLLUP
+* HAVING
+* SELECT
+* DISTINCT
+* ORDER BY
+
+Porém, a sequência pode variar em alguns casos, como quando o otimizador de consultas do SQL Server usa índices.
+
+---
+
