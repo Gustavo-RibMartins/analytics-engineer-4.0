@@ -55,19 +55,15 @@ ORDER BY TotalVendas DESC
 
 -- Pergunta 4: Como as vendas se acumulam por dia e por produto (incluindo subtotais diários)?
 SELECT
-    DataVenda,
-    CASE
-        WHEN GROUPING(Produto) = 1
-        THEN 'Total Dia'
-        ELSE Produto
-    END AS Produto,
+    COALESCE(CAST(DataVenda AS CHAR(10)), 'Total Geral') AS DataVenda,
+    COALESCE(Produto, 'Todos os Produtos') AS Produto,
     SUM(Quantidade * ValorUnitario) as TotalVendas
 FROM
     lab2.vendas
 GROUP BY
-    DataVenda, ROLLUP(Produto)
+    ROLLUP(DataVenda, Produto)
 ORDER BY
-    GROUPING(Produto), DataVenda, TotalVendas DESC
+    GROUPING(Produto), DataVenda, Produto
 
 
 -- Pergunta 5: Qual a combinação de vendedor e produto gerou mais vendas (incluindo todos os subtotais possíveis)?
@@ -95,19 +91,35 @@ LIMIT 1
 -- Como seria a Query SQL?
 SELECT
     CASE
-        WHEN GROUPING(Vendedor) = 1
-        THEN 'Total de Vendedores'
-        ELSE Vendedor
-    END AS Vendedor,
-    CASE
         WHEN GROUPING(Produto) = 1
         THEN 'Total de Produtos'
         ELSE Produto
     END AS Produto,
+    CASE
+        WHEN GROUPING(Vendedor) = 1
+        THEN 'Total de Vendedores'
+        ELSE Vendedor
+    END AS Vendedor,
     SUM(Quantidade * ValorUnitario) as TotalVendas
 FROM
     lab2.vendas
 GROUP BY
-    CUBE(Vendedor, Produto)
+    CUBE(Produto, Vendedor)
+HAVING
+	GROUPING(Produto) = 1 OR GROUPING(Vendedor) = 1
 ORDER BY
-    GROUPING(Vendedor, Produto), TotalVendas DESC
+    GROUPING(Produto, Vendedor) DESC, Produto, Vendedor
+
+
+-- SOLUÇÃO DO INSTRUTOR
+SELECT 
+    COALESCE(Produto, 'Todos') AS Produto, 
+    COALESCE(Vendedor, 'Todos') AS Vendedor, 
+    SUM(Quantidade * ValorUnitario) AS TotalVendas
+FROM 
+    cap10.vendas
+GROUP BY GROUPING SETS (
+    (Produto), 
+    (Vendedor), 
+    ()
+);
