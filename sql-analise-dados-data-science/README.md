@@ -189,3 +189,190 @@ Em One-Hot Encoding, para cada categoria da variável categórica, é criada uma
 * Pode aumentar significativamente a dimensionalidade do dataset, especialmente quando a variável categórica tem muitos valores;
 
 * A escolha entre Label Encoding e One-Hot Encoding deve ser feita com base no tipo de modelo que se planeja usar e na natureza da variável categórica.
+
+---
+
+## Joins
+
+**FULL JOIN** ou **FULL OUTER JOIN**, combina registros de duas tabelas de modo que você obtenha todos os registros de ambas.
+
+![](./imagens/full-join.png)
+
+O **CROSS JOIN** produz o produto cartesiano de duas tabelas. Isso significa que ele combina cada linha da primeira tabela com cada linha da segunda tabela.
+
+O **SELF JOIN** é uma técnica onde uma tabela é unida a si mesma. É usado para encontrar e combinar registros dentro da mesma tabela que compartilham alguma característica em comum.
+
+> **Obs.:** sintaticamente, o `SELF JOIN` é escrito apenas como `JOIN`, e na prática, quando não informamos o tipo de join, é aplicado `INNER JOIN`.
+>
+> ```sql
+> SELECT <campos>...
+> FROM tabela as t1
+> JOIN tabela as t2
+> ON <condicoes>
+> ```
+
+---
+
+## Union e Union All
+
+São operadores em SQL usados para combinar resultados de dias ou mais consultas em um único conjunto de resultados.
+
+O **UNION** combina os resultados de duas consultas e reomve quaisquer linhas duplicadas para produzir um conjunto de resultados únicos. As colunas e os tipos de dados nas consultas que estão sendo unidas devem ser os mesmos para que o UNION funcione.
+
+O **UNION ALL**, por outro lado, combina os resultados de duas consultas e inclui todas as linhas, incluindo duplicatas. Ele é frequentemente mais rápido do que o UNION poruqe não precisa verificar a unicidade das linhas.
+
+---
+
+## Boas práticas com Joins
+
+1. Seja específico: evite usar `SELECT *` quando fizer junções. Em vez disso, selecione apenas as colunas necessárias. Isso pode melhorar o desempenho da consulta e reduzir a carga sobre o banco de dados;
+
+2. Use Aliases para tabelas: ao trabalhar com múltiplas tabelas, usar aliases torna a consulta mais legível e evita ambiguidades;
+
+3. Especifique o tipo de junção: existem diferentes tipos de joins, como `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN` e `FULL JOIN`. Sempre especifique o tipo de junção que você pretende usar;
+
+4. Use junções com base em colunas indexadas: sempre que possível, realize joins usando colunas que possuem índices. Isso pode acelerar significativamente o desempenho da consulta;
+
+5. Evite junções cruzadas: uma junção cruzada `CROSS JOIN` retorna o produto cartesiano de duas tabelas, o que pode resultar em um número muito grande de registros e potencialmente sobrecarregar o sistema;
+
+6. Use condições de junção claras: certifique-se de que as condições de junção sejam claras e precisas;
+
+7. Cuidado com junções de auto-referência: ao fazer `SELF JOIN`, seja cauteloso e use aliases para diferenciar entre as "cópias" da tabela;
+
+8. Teste sua consulta em um ambiente seguro: antes de executar consultas complexas em um ambiente de produção, teste-as em um ambiente de desenvolvimento ou em um subconjunto de dados para garantir que elas funcionem como esperado;
+
+9. Monitore o desempenho: use ferramentas e recursos deo banco de dados para monitorar o desempenho das consultas. Se uma consulta com join estiver demorando muito para ser executada, considere otimizá-la ou consultar o administrador do banco de dados;
+
+10. Entenda a modelagem dos dados: familiarize-se com o esquema do banco de dados, relacionamentos e chaves estrangeiras. Isso ajudará a criar junções corretas e eficientes;
+
+11. Evite junções desnecessárias: se você não precisa de dados de uma tabela específica para satisfazer sua consulta, evite juntá-la. Junções desnecessárias podem adicionar sobrecarga sem valor.
+
+---
+
+## Agregações Avançadas
+
+### Rollup
+
+É uma extensão do group by, utilizado principalmente para realizar análises agregadas e multidimensionais, como relatórios sumarizados ou subtotais.
+
+Exemplo:
+```sql
+SELECT 
+    B.Ds_Categoria,
+    B.Ds_Produto,
+    COUNT(*) AS Qt_Vendas,
+    SUM(B.Preco) AS Vl_Total
+FROM 
+    #Vendas A
+    JOIN #Produtos B ON A.Cd_Produto = B.Codigo
+GROUP BY
+    ROLLUP(B.Ds_Categoria, B.Ds_Produto)
+```
+
+![](./imagens/rollup.png)
+
+---
+
+### Cube
+
+O operador `CUBE` em SQL é uma extensão da cláusula `GROUP BY` que facilita análises multidimensionais avançadas, como relatórios com múltiplas combinações de subtotais e totais gerais.
+
+Diferente do `ROLLUP`, que cria subtotais em uma hierarquia sequencial, o `CUBE` gera todas as combinações possíveis de subtotais para as colunas especificadas.
+
+Por exemplo, se você usa `CUBE` com as colunas A, B e C (`GROUP BY CUBE(A, B, C)`), ele retornará subtotais para A, B, C, A+B, A+C, B+C, A+B+C e também um total geral.
+
+Exemplo:
+
+```SQL
+SELECT
+   warehouse,
+   product,
+   SUM(quantity)
+FROM
+   inventory
+GROUP BY
+   CUBE(warehouse,product)
+ORDER BY
+   warehouse,
+   product;
+```
+
+![](./imagens/cube.png)
+
+---
+
+### Grouping Sets
+
+A função `GROUPING` em SQL é usada para determinar se uma coluna ou expressão em uma consulta está sendo agrupada ou se está em uma linha de subtotal ou total. Ela retorna 0 ou 1 (está em um subtotal/total).
+
+Podemos usá-la para fazer ordenação de resultados agregados que utilizam `ROLLUP` e `CUBE`.
+
+Exemplo:
+```SQL
+SELECT 
+    CASE 
+        WHEN ano IS NULL THEN 'Total Geral' 
+        ELSE CAST(ano AS VARCHAR)
+    END AS ano, 
+    CASE 
+        WHEN produto IS NULL THEN 'Todos os Produtos' 
+        ELSE produto
+    END AS produto, 
+    SUM(faturamento) AS faturamento_total
+FROM 
+    cap10.dsa_vendas
+GROUP BY 
+    ROLLUP(ano, produto)
+ORDER BY 
+    GROUPING(produto), ano, faturamento_total;
+```
+
+![](./imagens/grouping.png)
+
+Como o `GROUPING` retorna 0 ou 1, dependendo do valor ser agrupado ou não, podemos usar isso para preencher os subtotais e totais dentro de um `CASE WHEN`:
+
+```SQL
+SELECT
+    CASE 
+        WHEN GROUPING(ano) = 1 THEN 'Total de Todos os Anos'
+        ELSE CAST(ano AS VARCHAR)
+    END AS ano,
+    CASE 
+        WHEN GROUPING(pais) = 1 THEN 'Total de Todos os Países'
+        ELSE pais
+    END AS pais,
+    CASE 
+        WHEN GROUPING(produto) = 1 THEN 'Total de Todos os Produtos'
+        ELSE produto
+    END AS produto,
+    SUM(faturamento) AS faturamento_total 
+FROM 
+    cap10.dsa_vendas
+GROUP BY 
+    ROLLUP(ano, pais, produto)
+ORDER BY 
+    GROUPING(produto, ano, pais), faturamento_total;
+```
+
+---
+
+### GROUP_CONCAT x STRING_AGG
+
+O `STRING_AGG` faz a concatenação de diversos valores em umna coluna, colocando-os na mesma linha em formato de lista.
+
+Exemplo:
+```SQL
+SELECT 
+    pais,
+    STRING_AGG(produto, ', ') AS produtos_vendidos,
+    SUM(faturamento) AS faturamento_total 
+FROM 
+    cap10.dsa_vendas
+WHERE ano = 2024
+GROUP BY 
+    pais;
+```
+
+![](./imagens/string_agg.png)
+
+> **Obs**.: `STRING_AGG` é o nome da função no Postgre. No MySQL se chama `GROUP_CONCAT` e em outros SGBDs é preciso checar o nome da função ou recurso semelhante.
