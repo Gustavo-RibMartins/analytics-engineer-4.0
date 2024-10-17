@@ -376,3 +376,108 @@ GROUP BY
 ![](./imagens/string_agg.png)
 
 > **Obs**.: `STRING_AGG` é o nome da função no Postgre. No MySQL se chama `GROUP_CONCAT` e em outros SGBDs é preciso checar o nome da função ou recurso semelhante.
+
+---
+
+## Window Function
+
+Uma função de janela executa um cálculo em um conjunto de linhas da tabela que estão de alguma forma relacionadas à linha atual. Isto é comparável ao tipo de cálculo que pode ser feito com uma função agregada.
+
+No entanto, as funções de janela não fazem com que as linhas seham agrupadas em uma única linha de saída, como fariam as agregações tradicionais (que utilizam a cláusula `GROUP BY`). Em vez disso, as linhas mantêm suas identidades separadas (granularidade original).
+
+Uma chamada de função de janela sempre contém uma cláusula `OVER` diretamente após o nome e os argumentos da função de janela. Isso é o que o distingue sintaticamente de uma função normal ou de um agregado que não seja de janela.
+
+A cláusula `OVER` determina exatamente como as linhas da consulta são divididas para processamento pela função de janela. A cláusula `PARTITION BY` em `OVER` divide as linhas em grupos, ou partições, que compartilham os mesmos valores da(s) expressão(ões) `PARTITION BY`. Para cada linha, a função de janela é calculada nas linhas que caem na mesma partição da linha atual.
+
+Você também pode controlar a ordem em que as linhas são processadas pelas funções de janela usando `ORDER BY` em `OVER` (a janela `ORDER BY` nem precisa corresponder à ordem em que as linhas são exibidas).
+
+![](./imagens/window-function.png)
+
+---
+
+### ROW_NUMBER()
+
+Cria uma coluna com uma numeração de 1 a N com base na partição informada.
+
+Exemplo:
+```SQL
+SELECT 
+	artists,
+	name,
+	danceability,
+	ROW_NUMBER() OVER (PARTITION BY artists ORDER BY danceability DESC) AS number
+FROM spotify
+GROUP BY artists, name, danceability
+```
+![](./imagens/row_number.png)
+
+---
+
+### RANK()
+
+Cria um rank dos dados com base na partição informada da seguinte forma:
+
+* Ranking vai de 1 a N;
+* Caso haja X empates na posição M, os empatados recebem a posição M;
+* A próxima posição imediatamente após os registros empatados, será M + X.
+
+Com isso, ao usar `rank()` é possível que algumas posições não existam na base.
+
+Exemplo:
+```SQL
+SELECT
+    Name,
+    Score,
+    RANK() OVER (ORDER BY Score DESC) AS Rank
+FROM
+    Students;
+```
+
+![](./imagens/rank.png)
+
+> **Obs.:** observe que no exemplo acima, não há a posição `2`, porque há empate de 2 pessoas na primeira posição.
+
+---
+
+### DENSE_RANK()
+
+Cria um rank dos dados com base na partição informada da seguinte forma:
+
+* Ranking vai de 1 a N;
+* Caso haja X empates na posição M, os empatados recebem a posição M;
+* A próxima posição imediatamente após os registros empatados, será M + 1.
+
+Com isso, ao usar `dense_rank()`, não haverão posições "faltando" no ranking.
+
+Exemplo:
+```SQL
+SELECT
+    Name,
+    Score,
+    DENSE_RANK() OVER (ORDER BY Score DESC) AS Dense_Rank
+FROM
+    Students;
+```
+
+![](./imagens/dense_rank.png)
+
+---
+
+### NTILE()
+
+Divide os dados em grupos/subsets, de aproximadamente o mesmo tamanho, na quantidade informada no `NTILE()`, fazendo agrupamento das informações.
+
+Exemplo:
+```SQL
+SELECT
+    NTILE(4) OVER ( ORDER BY amount ) AS sale_group,
+    product_id,
+    product_category,
+    soccer_team,
+    amount as sales_amount
+FROM sales
+WHERE sale_date >= '2023-12-01' AND sale_date <= '2023-12-31';
+```
+![](./imagens/ntile.png)
+
+---
