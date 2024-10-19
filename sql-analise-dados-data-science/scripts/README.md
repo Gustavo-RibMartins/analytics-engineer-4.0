@@ -2,10 +2,10 @@
 
 ## LAB 1:
 
-**Script**
+**Scripts**
 
-[06-lab-categoriazacao-codificacao-binarizacao.sql](./06-lab-categoriazacao-codificacao-binarizacao.sql)
-
+- [06-lab-categoriazacao-codificacao-binarizacao.sql](./06-lab-categoriazacao-codificacao-binarizacao.sql);
+- [06-lab-exercicio.sql](./06-lab-exercicio.sql).
 
 **Metadados**
 
@@ -28,3 +28,26 @@
 - quadrante[VARCHAR(255)]: Esta coluna contéminformações sobre o quadrante do seio afetado pelo tumor. Esta variável deve ser representada numericamente;
 
 - irradiando[VARCHAR(255)]:  Esta  coluna indicase  o  paciente  está  ou  não  recebendo tratamento de radioterapia. Os valores podem incluir "não" ou "sim”. Esta variável deve ser representada numericamente.
+
+---
+
+## LAB 2:
+
+**Scripts**
+
+- [13-lab-ii-eda.sql](./13-lab-ii-eda.sql);
+- [13-lab-ii-exercicio.sql](./13-lab-ii-exercicio.sql).
+
+**Metadados**
+
+- id: Identificador único para cada lançamento;
+- data_lancamento: A data em que o lançamento contábil está sendo feito;
+- conta_debito: Conta contábil a ser debitada;
+- conta_credito: Conta contábil a ser creditada;
+- valor: Valor monetário do lançamento;
+- documento: Documentação comprobatória da operação;
+- natureza_operacao: Descrição do evento contábil;
+- centro_custo: Setor ou departamento responsável pela operação;
+- impostos: Impostos e tributos envolvidos, se aplicável;
+- moeda: Moeda utilizada na operação, se aplicável;
+- taxa_conversao: Taxa de conversão para a moeda nacional, se aplicável.

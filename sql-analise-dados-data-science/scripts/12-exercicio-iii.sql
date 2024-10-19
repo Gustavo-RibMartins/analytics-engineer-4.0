@@ -1,7 +1,7 @@
-CREATE SCHEMA lab03 AUTHORIZATION "pgAdministrador";
+CREATE SCHEMA exe03 AUTHORIZATION "pgAdministrador";
 
 -- Cria a tabela
-CREATE TABLE lab03.vendas_temporais (
+CREATE TABLE exe03.vendas_temporais (
     id SERIAL PRIMARY KEY,
     data_venda DATE NOT NULL,
     valor_venda DECIMAL(10,2) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE lab03.vendas_temporais (
 
 
 -- Insere os registros
-INSERT INTO lab03.vendas_temporais (data_venda, valor_venda, funcionario_id) VALUES
+INSERT INTO exe03.vendas_temporais (data_venda, valor_venda, funcionario_id) VALUES
 ('2025-01-01', 175.00, 1001),
 ('2025-01-02', 155.00, 1001),
 ('2025-01-03', 321.00, 1002),
@@ -35,7 +35,7 @@ SELECT
 	data_venda,
 	SUM(valor_venda) as total_venda_dia
 FROM
-	lab03.vendas_temporais
+	exe03.vendas_temporais
 GROUP BY
 	data_venda
 )
@@ -60,7 +60,7 @@ SELECT
 	data_venda,
 	SUM(valor_venda) as total_venda_dia
 FROM
-	lab03.vendas_temporais
+	exe03.vendas_temporais
 GROUP BY
 	data_venda
 )
@@ -85,7 +85,7 @@ SELECT
 	data_venda,
 	SUM(valor_venda) as total_venda_dia
 FROM
-	lab03.vendas_temporais
+	exe03.vendas_temporais
 GROUP BY
 	data_venda
 )
@@ -123,7 +123,7 @@ SELECT
 	data_venda,
 	SUM(valor_venda) as total_venda_dia
 FROM
-	lab03.vendas_temporais
+	exe03.vendas_temporais
 GROUP BY
 	data_venda
 )
@@ -147,7 +147,7 @@ SELECT
 	funcionario_id,
 	SUM(valor_venda) as total_venda_dia
 FROM
-	lab03.vendas_temporais
+	exe03.vendas_temporais
 GROUP BY
 	data_venda,
 	funcionario_id

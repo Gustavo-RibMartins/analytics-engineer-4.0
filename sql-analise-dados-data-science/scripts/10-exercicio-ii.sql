@@ -1,8 +1,8 @@
 -- Cria o schema no banco de dados
-CREATE SCHEMA lab2 AUTHORIZATION "pgAdministrador";
+CREATE SCHEMA exe02 AUTHORIZATION "pgAdministrador";
 
 -- Criação da tabela 
-CREATE TABLE lab2.vendas (
+CREATE TABLE exe02.vendas (
     ID INT PRIMARY KEY,
     DataVenda DATE,
     Produto VARCHAR(50),
@@ -13,7 +13,7 @@ CREATE TABLE lab2.vendas (
 
 
 -- Insert
-INSERT INTO lab2.vendas (ID, DataVenda, Produto, Quantidade, ValorUnitario, Vendedor) VALUES
+INSERT INTO exe02.vendas (ID, DataVenda, Produto, Quantidade, ValorUnitario, Vendedor) VALUES
 (1, '2023-11-01', 'Produto A', 10, 100.00, 'Zico'),
 (2, '2023-11-01', 'Produto B', 5, 200.00, 'Romário'),
 (3, '2023-11-02', 'Produto A', 7, 100.00, 'Ronaldo'),
@@ -30,7 +30,7 @@ INSERT INTO lab2.vendas (ID, DataVenda, Produto, Quantidade, ValorUnitario, Vend
 SELECT
     Produto,
     SUM(Quantidade * ValorUnitario) as TotalVendas
-FROM lab2.vendas
+FROM exe02.vendas
 GROUP BY Produto
 ORDER BY TotalVendas DESC
 
@@ -39,7 +39,7 @@ ORDER BY TotalVendas DESC
 SELECT
     Vendedor,
     SUM(Quantidade * ValorUnitario) as TotalVendas
-FROM lab2.vendas
+FROM exe02.vendas
 GROUP BY Vendedor
 ORDER BY TotalVendas DESC
 
@@ -48,7 +48,7 @@ ORDER BY TotalVendas DESC
 SELECT
     DataVenda,
     SUM(Quantidade * ValorUnitario) as TotalVendas
-FROM lab2.vendas
+FROM exe02.vendas
 GROUP BY DataVenda
 ORDER BY TotalVendas DESC
 
@@ -59,7 +59,7 @@ SELECT
     COALESCE(Produto, 'Todos os Produtos') AS Produto,
     SUM(Quantidade * ValorUnitario) as TotalVendas
 FROM
-    lab2.vendas
+    exe02.vendas
 GROUP BY
     ROLLUP(DataVenda, Produto)
 ORDER BY
@@ -80,7 +80,7 @@ SELECT
     END AS Produto,
     SUM(Quantidade * ValorUnitario) as TotalVendas
 FROM
-    lab2.vendas
+    exe02.vendas
 GROUP BY
     CUBE(Vendedor, Produto)
 ORDER BY
@@ -102,7 +102,7 @@ SELECT
     END AS Vendedor,
     SUM(Quantidade * ValorUnitario) as TotalVendas
 FROM
-    lab2.vendas
+    exe02.vendas
 GROUP BY
     CUBE(Produto, Vendedor)
 HAVING
@@ -117,7 +117,7 @@ SELECT
     COALESCE(Vendedor, 'Todos') AS Vendedor, 
     SUM(Quantidade * ValorUnitario) AS TotalVendas
 FROM 
-    cap10.vendas
+    exe02.vendas
 GROUP BY GROUPING SETS (
     (Produto), 
     (Vendedor), 

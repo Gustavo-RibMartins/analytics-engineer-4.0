@@ -481,3 +481,143 @@ WHERE sale_date >= '2023-12-01' AND sale_date <= '2023-12-31';
 ![](./imagens/ntile.png)
 
 ---
+
+## Análise Exploratória de Dados (EDA)
+
+Na Análise Exploratória de Dados, o objetivo principal é entender os dados e extrair insights. Aqui estão os principais elementos a serem procurados:
+
+* Analise a distribuição de diferentes variáveis, opbservando tendências, padrões e outliers. Histogramas, boxplots e gráficos de densidade são frequentemente usados para este propósito;
+
+* Verificar se há correlações ou padrões entre diferentes variáveis;
+
+* Conferir tendências ao longo do tempo, ou seja, se os dados são temporais, é importante verificar tendências, ciclicidade e sazonalidade;
+
+* Identificar e tratar dados ausentes, valores extremos ou outras anomalias que possam afetar a análise;
+
+* Examinar como diferentes segmentos ou grupos dentro dos dados podem se comportar de maneira diferente. Isso pode ser feito por meio de análises estratificadas ou comparativas;
+
+* Utilizar estatísticas descritivas (como média, mediana, desvio padrão) para resumir as características dos dados;
+
+* Realizar testes estatísticos para verificar suposições ou hipóteses sobre os dados;
+
+* Utilizar gráficos e visualizações para entender melhor os dados e comunicar descobertas. Gráficos como gráifocs de barras, linhas, mapas de calor e gráficos de área podem ser úteis;
+
+* Integrar conhecimento do domínio e contexto para interpretar os resultados da análise de forma apropriada;
+
+* Avaliar a qualidade e a confiabilidade dos dados, considerando possíveis viéses ou erros;
+
+Ao realizar a EDA, é essencial manter uma abordagem flexível e iterativa, pois novas descobertas podem levar a novas perguntas e análises.
+
+---
+
+### Percentil
+
+É uma medida estatística que indica o valor abaixo do qual uma determinada porcentagem dos dados em um conjunto de dados cai.
+
+Por exemplo, o 20º percentil é o valor abaixo do qual 20% dos dados estão situados.
+
+![](./imagens/percentil.png)
+
+**Divisão do Conjunto de Dados**
+
+OS percentis dividem o conjunto de dados em cem partes iguais.
+
+**Percentis Comuns**
+
+Alguns percentis comuns são o 25°, 50° e 75°, conhecidos como primeiro quartil, mediana e terceiro quartil, respectivamente. A mediana divide os dados ao meio, o primeiro quartil marca a linha de corte inferior de 25%, e o terceiro quartil marca a linha de corte superior de 75%.
+
+**Uso em Estatística Descritiva**
+
+Percentis são úteis para fornecer uma visão clara da distribuição dos dados. Por exemplo, ao dizer que o salário de um indivíduo está no 90° percentil, isso significa que ele ganha mais do que 90% das pessoas no conjunto de dados.
+
+**Aplicações Práticas**
+
+São usados em uma variedade de campos, como em testes padronizados, onde as pontuações são frequentemente relatadas em percentis, ou em medicina, para avaliar o crescimento infantil.
+
+**Cálculo**
+
+Para calcular um percentil, os dados são primeiro ordenados em ordem crescente. Depois, se utiliza uma fórmula para encontrar o número que representa o percentil desejado. Dependendo da fórmula e do tamanho do conjunto de dados, o valor exato do percentil pode variar ligeiramente entre diferentes métodos de cálculo.
+
+**Interpretação Cuidadosa**
+
+É importante interpretar os percentis no contexto dos dados analisados. Por exemplo, estar no alto percentil em um conjunto de dados de doenças não é desejável, ao contrário do alto percentil em testes de desempenho acadêmico.
+
+---
+
+### Distribuição de Dados
+
+Refere-se à maneira como os valores de um conjunto de dados estão espalhados ou organizados.
+
+A distribuição pode ser visualizada de várias maneiras, como gráficos de barras, histogramas, gráficos de caixa, etc., e é importantíssima para entender as características dos dados.
+
+**Formas de Distribuição**
+
+Os dados podem seguir diferentes formas de distribuição, como normal (ou gaussiana), binomial, uniforme, exponencial, etc. Cada tipo de distribuição tem suas próprias características e aplicações.
+
+**Medidas de Tendência Central**
+
+EStatísticas que resumem a localização central de uma distribuição. Incluem a média (ou média aritmética), a mediana (o valor médio) e a moda (o valor mais frequente).
+
+**Medidas de Dispersão**
+
+Estas medidas descrevem o quão espalhados estão os dados. Incluem o desvio padrão, a variância, a amplitude (diferença entre os valores máximo e mínimo) e os quartis, que ajudam a entender a distribuição dos dados ao redor da média.
+
+**Assimetria e Curtose**
+
+Estas medidas que descrevem a forma da distribuição de dados. A assimetria indica se os dados são inclinados para a esquerda ou direita (distribuição assimétrica) e a curtose descreve o grau de pico da distribuição.
+
+**Outliers (Valores Atípicos)**
+
+São valores que se desviam significativamente do resto dos dados. Eles podem distorcer significativamente a distribuição e muitas vezes requerem atenção especial em análises estatísticas.
+
+**Visualização de Dados**
+
+A distribuição dos dados é frequentemente visualizada usando gráficos como histogramas, boxplots, gráficos de densidade, etc., que fornecem uma visão intuitiva de como os dados estão distribuídos.
+
+**Aplicações Práticas**
+
+A compreensão da distribuição de dados é essencial em muitos campos, incluindo Ciência de Dados, pesquisa, economia, engenharia, etc., pois influencia a escolha dos métodos estatísticos e algoritmos a serem aplicados para análises posteriores.
+
+**Testes Estatísticos**
+
+Diferentes testes estatísticos são adequados para diferentes distribuições de dados. Por exemplo, alguns testes são específicos para dados normalmente distribuídos.
+
+---
+
+### Entregando o Resultado da Análise
+
+A entrega de um projeto de análise exploratória de dados (EDA) envolve várias etapas importantes para garantir que os resultados sejam compreensíveis, úteis e bem fundamentados.
+
+Aqui está uma descrição de como você pode proceder:
+
+**Preparação dos Dados:**
+
+Antes de começar a análise, é essencial limpar e preparar os dados. Isso inclui tratar valores ausentes, remover ou corrigir outliers e possivelmente transformar variáveis para formatos mais apropriados.
+
+**Análise Exploratória Inicial:**
+
+Comece explorando os dados com estatísticas descritivas (média, mediana, desvio padrão, etc) e visualizações básicas (gráficos de barras, histogramas, boxplots). O objetivo é entender as distribuições, tendências e padrões nos dados.
+
+**Análise Multivariada:**
+
+Explore as relações entre diferentes variáveis. Isso pode incluir correlações e análises de agrupamento.
+
+**Identificação de Insights:**
+
+À medida que você analisa os dados, identifique insights significativos ou padrões interessantes. Esses insights são muitas vezes o coração do seu projeto e devem ser claramente desatacados.
+
+**Documentação e Relatório:**
+
+Documente seu processo e descobertas em um relatório. Esse relatório deve incluir uma introdução aos dados, uma descrição das etapas de análise, visualizações importantes e uma seção de conclusões e recomendações.
+
+**Revisão e Feedback:**
+
+Antes da entrega final, revise seu trabalho e, se possível, obtenha feedback de colegas ou mentores. Eles podem identificar pontos que você perdeu ou sugerir melhorias.
+
+**Entrega Final:**
+
+Apresente o projeto ao seu público-alvo. Isso pode ser feito através de uma apresentação, um relatório escrito ou até mesmo um dashboard interativo, dependendo das necessidades e preferências do público.
+
+Lembre-se de que a comunicação eficaz dos resultados é tão importante quanto a análise em si. Garanta que suas descobertas sejam apresentadas de forma clara e compreensível para o público-alvo.
+
+---
