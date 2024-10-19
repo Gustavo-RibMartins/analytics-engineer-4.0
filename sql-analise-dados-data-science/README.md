@@ -621,3 +621,383 @@ Apresente o projeto ao seu público-alvo. Isso pode ser feito através de uma ap
 Lembre-se de que a comunicação eficaz dos resultados é tão importante quanto a análise em si. Garanta que suas descobertas sejam apresentadas de forma clara e compreensível para o público-alvo.
 
 ---
+
+## Limpeza e Transformação de Dados
+
+A limpeza de dados no contexto de ciência de dados, é um processo que envolve a preparação de conjuntos de dados para análise e modelagem. Esse processo incluir etapas e técnicas para garantir que os dados sejam precisos, consistentes e utilizáveis.
+
+**1. Identificação e Remoção de Erros e Inconsistências**
+
+Correção de erros de digitação, a resolução de inconsistências nos formatos de dados (datas, números) e a identificação de valores fora do padrão que podem indicador erros de entrada.
+
+**2. Tratamento de Valores Ausentes**
+
+Dados ausentes podem ser um problema significativo. A limpeza pode envolver a imputação de valores ausentes (preenchendo-os com estimativas), a exclusão de registros com muitos valores ausentes, ou a análise das causas dessas ausências.
+
+**3. Normalização e Padronização**
+
+Consiste em transformar dados para seguir um formato comum, o que facilita a compração e análise. Isso pode incluir a conversão de unidades, a normalização de textos (por exemplo, converter tudo para minúsculo) ou a padronização de categorias (por exemplo, agrupar categorias similares).
+
+**4. Detecção e Tratamento de Outliers**
+
+Identificar e avaliar valores extremos ou atípicos nos dados, que podem ser erros ou variações legítimas. Dependendo da análise, esses outliers podem ser removidos, ajustados ou mantidos.
+
+**5. Verificação de Duplicatas**
+
+Identificar e remover registros duplicados para evitar distorções nas análises.
+
+**6. Transformação de Dados**
+
+Em alguns casos, pode ser necessário transformar dados (por exemplo, através de algorítmos ou outras funções matemáticas) para melhorar a análise ou o desempenho dos modelos de machine learning.
+
+**7. Validação de Dados**
+
+Garantir que os dados estão corretos e válidos, frequentemente através de regras de negócio ou comparação com fontes externas de dados.
+
+A limpeza de dados é essencial porque dados de má qualidade podem levar a conclusões incorretas, afetar negativamente a precisão dos modelos preditivos e, em última análise, levar a decisões empresariais equivocadas.
+
+Em muitos projetos de ciência de dados, a limpeza e preparação dos dados podem consumir a maior parte do tempo e dos recursos, mas são fundamentais para o sucesso do projeto.
+
+---
+
+### Valores Ausentes
+
+Valores ausentes, no contexto de ciência de dados e análise de dados, referem-se a situações onde certos dados esperados ou necessários não estão presentes no conjunto de dados.
+
+Eles são comuns em muitos tipos de dados e podem surgir por várias razões:
+
+**1. Dados não coletados**
+
+Informações podem não ter sido coletadas. Exemplo: um respondente pode deixar de responder a uma pergunta em uma pesquisa.
+
+**2. Erros na coleta de dados**
+
+Erros técnicos ou humanos durante a coleta de dados podem resultar em dados ausentes. Exemplo: falhas em sensores ou erros de entrada.
+
+**3. Dados removidos**
+
+Dados excluídos, seja intencionalmente ou por acidente.
+
+**4. Inaplicabilidade**
+
+Certos dados podem ser inaplicáveis em certas situações. Exemplo: a pergunta sobre a renda de um estudante pode não ser aplicável a crianças.
+
+**Tipos de Valores Ausentes**
+
+**1. Completamente Aleatórios (MCAR - Missing Completely At Random):**
+
+Quando a probabilidade de um dado estar ausente é a mesma para todas as observações, sem relação com outros dados.
+
+**2. Aleatórios (MAR - Missing At Random)**
+
+Quando a probabilidade de um dado estar ausente está relacionada a outras variáveis no conjunto de dados, mas não a variável ausente em si.
+
+**3. Não aleatóros (MNAR - Missing Not At Random)**
+
+Quando a probabilidade de um dado estar ausente está diretamente relacionada à variável que está ausente.
+
+**Tratamento de Valores Ausentes**
+
+* **Exclusão:** remover registros com valores ausentes. É simples, mas pode levar à perda de dados importantes;
+* **Imputação Simples:** substituir valores ausentes por uma estimativa, que pode ser a média, mediana ou moda, para variáveis contínuas ou categóricas, respectivamente;
+* **Imputação Baseada em Modelos:** utilizar modelos estatísticos ou de machine learning para estimar os valores ausentes com base em outros dados disponíveis;
+* **Análise de Sensibilidade:** avaliar como os resultados analíticos variam com diferentes métodos de tratamento de valores ausentes.
+
+**Impacto e Considerações**
+
+- Valores ausentes podem distorcer as estatísticas descritivas e os resultados analíticos se não forem adequadamente tratados;
+- A decisão de como tratar valores ausentes depende de sua natureza, quantidade e do contexto específico de análise ou modelagem;
+- Em algumas análises, especialmente em modelos preditivos, a forma como os valores ausentes são tratados pode afetar significativamente a performance do modelo.
+
+---
+
+### Complete Cases
+
+Ou "Casos Completos", em análise de dados e estatística, referem-se a registros ou linhas de um conjunto de dados onde todas as variáveis têm valores não ausentes.
+
+Em outras palavras, são observações que não contêm valores ausentes em nenhuma das variáveis consideradas.
+
+A análise baseada apenas em *complete cases* é considerada livre de viés introduzido por dados ausentes, desde que os dados ausentes sejam completamente aleatórios (MCAR).
+
+A análise de *complete cases* é metodologicamente mais simples e direta, pois não envolve técnicas complexas de imputação ou modelagem de dados ausentes.
+
+---
+
+### Técnicas de Tratamento de Dados Faltantes
+
+Existem diversas técnicas disponíveis, cada uma com seus próprios méritos e limitações. A escolha da técnica adequada depende do contexto do problema, da quantidade e do padrão dos dados ausentes.
+
+**1. Exclusão dos Casos ou Listwise Deletion**
+
+Consiste em descartar todas as observações onde qualquer dado está faltando.
+
+**Quando usar:** Efetivo quando a quantidade de dados faltantes é insignificante e aleatória (MCAR).
+
+**Limitações:** Pode levar à perda significativa de dados e introduzir viés se os dados não forem MCAR.
+
+**2. Imputação Média/Mediana/Moda**
+
+Substitui os dados faltantes pela média, mediana ou moda (para dados categóricos) das observações disponíveis.
+
+**Quando usar:** Simples e útil para conjuntos de dados com poucos dados ausentes.
+
+**Limitações:** Pode distorcer a distribuição dos dados e reduzir a variação.
+
+**3. Imputação por Hot Deck/ Cold Deck**
+
+Substitui os dados faltantes por valores observados de casos semelhantes (hot deck) ou de fontes externas (cold deck).
+
+**Quando usar:** Útil quando há padrões claros ou agrupamentos nos dados.
+
+**Limitações:** Pode ser arbitrário e introduzir viés se os pares não forem bem escolhidos.
+
+**4. Imputação com K-Nearest Neighbors (KNN)**
+
+Usa os K registros mais semelhantes (baseados em outras variáveis) para imputar dados faltantes.
+
+**Quando usar:** Efetivo em conjuntos de dados com padrões complexos e interdependências.
+
+**Limitações:** Requer uma definição cuidadosa de "semelhança" e é computacionalmente intensivo para grandes conjuntos de dados.
+
+**5. Imputação por Regressão**
+
+Utiliza modelos de regrassão para prever e substituir dados faltantes com base em outras variáveis.
+
+**Quando usar:** Bom para dados com relações lineares fortes.
+
+**Limitações:** Pode ser enviesado se as relações lineares não forem uma boa representação dos dados.
+
+**6. Método de Máxima Verossimilhança**
+
+Estima os valores mais prováveis para dados faltantes com base na probabilidade.
+
+**Quando usar:** Útil para análises estatísticas complexas e conjuntos de dados grandes.
+
+**Limitações:** Exige um entendimento profundo de estatística e é computacionalmente exigente.
+
+**7. Imputação Múltipla**
+
+Cria várias "completas" versões do conjunto de dados, imputando valores faltantes de formas diferentes, e depois combina os resultados.
+
+**Quando usar:** Considerado um dos métodos mais robustos, especialmente quando os dados não são MCAR.
+
+**Limitações:** Complexo em termos de implementação e interpretação.
+
+**8. Abordagens Baseadas em Modelos de Machine Learning**
+
+Utiliza algoritmos de ML como árvores de decisão, redes neurais, ou modelos de ensemble para imputar dados faltantes.
+
+**Quando usar:** Eficaz para padrões complexos e não-lineares nos dados.
+
+**Limitações:** Requer uma compreensão avançada de ML e pode ser overfitting.
+
+**CONSIDERAÇÕES IMPORTANTES**
+
+- **Entendimento dos dados:** É crucial entender o padrão e a natureza dos dados ausentes antes de escolher uma técnica de imputação;
+- **Avaliação do Impacto:** Após a imputação, é importante avaliar como ela afeta a análise subsequente, por exemplo, através de análise de sensibilidade.
+
+---
+
+### Técnicas de Remoção de Dados Duplicados
+
+A remoção de dados duplicados é uma etapa importante no processo de limpeza de dados, especialmente quando lidamos com grandes conjuntos de dados.
+
+Dados duplicados podem levar a análises imprecisas e resultados enganosos.
+
+**1. Identificação Manual**
+
+Revisão manual dos dados para identificar duplicatas. Só é viável se o conjunto de dados for muito pequeno.
+
+**2. Deduplicação Baseada em Regras**
+
+Criação de regras específicas para identificar duplicatas, como comparar colunas específicas para verificar igualdade. É útil em casos onde duplicatas podem ser claramente definidas por criérios específicos.
+
+**3. Comparação de Strings e Técnicas de Similaridade**
+
+Uso de algorítmos de similaridade de strings (como distância de Levenshtein, Jaccard ou Similaridade de Cosseno) para identificar duplicatas que podem não ser idênticas devido a pequenas variações ou erros. É efetiva para dados textuais onde duplicatas podem não ser exatas devido a erros de digitação ou formatação.
+
+**4. Algoritmos de Hashing**
+
+Conversão de registros em códigos hash e comparação desses códigos para identificar duplicatas. É rápido e eficiente para grandes volumes de dados, mas pode haver o risco de colisão de hash (diferentes entradas gerando o mesmo hash).
+
+**5. Filtragem com Ferramentas de Software**
+
+Uso de ferramentas de software e linguagens de programação (SQL, Python, R) para filtrar duplicatas. Por exemplo, funções como `DISTINCT` em SQL ou `drop_duplicates` no pandas. É eficiente para conjuntos de dados de médio a grande porte e geralmente a abordagem mais utilizada.
+
+**6. Abordagens Baseadas em Machine Learning**
+
+Utilização de técnicas de aprendizado de máquina para identificar padrões complexos que podem indicar duplicatas. Útil em casos complexos onde as duplicatas não são óbvias e podem depender de várias variáveis.
+
+**CONSIDERAÇÕES IMPORTANTES**
+
+- **Definição de Duplicata:** A definição de uma duplicata pode variar dependendo do contexto. É crucial definir claramente o que constitui uma duplicata no seu conjunto de dados específico;
+- **Preservação de Dados:** Em alguns casos, pode ser importante manter um registro das duplicatas removidas para fins de auditoria ou análise posterior;
+- **Qualidade dos Dados:** A remoção de duplicatas deve ser feita com cuidado para evitar a eliminação indevida de dados válidos.
+
+---
+
+### Outliers
+
+São valores ou observações em um conjunto de dados que se desviam significativamente de outras observações.
+
+Eles podem ser muito maiores, menores ou de alguma forma distrintos quando comparados com a maioria dos dados.
+
+A identificação e o tratamento de outliers são aspectos importantes na análise de dados e estatística, pois podem influenciar significativamente os resultados de análises e modelos estatísticos.
+
+Características dos Outliers:
+
+**1. Desvio Signifivativo**
+
+Outliers são notavelmente diferentes do padrão geral de dados. Eles podem ser valores extremamente altos ou baixos que parecem estar fora do intervalo comum dos dados.
+
+**2. Causas Diversas**
+
+Podem ser resultantes de erros de medição ou entrada de dados, variações naturais em processos, ou mudanças no comportamento do sistema ou processo estudado.
+
+**3. Impacto nos Resultados**
+
+Podem distorcer médias, mediana e outras medidas estatísticas, afetando assim a interpretação e análise dos dados.
+
+**Tipos de Outliers**
+
+**1. Ponto Outler**
+
+Um valor que se destaca das demais observações em uma única variável.
+
+**2. Outlier Contextual**
+
+Valor que é considerado outlier em um determinado contexto, mas não em outro. Por exemplo, um consumo de energia muito alto pode ser normal em um dia de verão, mas um outlier em um dia de inverno.
+
+**3. Outlier Coletivo**
+
+Um subconjunto de observações que, como um grupo, diverge significativamente do padrão geral dos dados, mesmo que os valores individuais não sejam extremos.
+
+**Detecção de Outliers**
+
+**1. Métodos Estatísticos**
+
+Usar regras baseadas em medidas estatísticas, como a Distância Interquartil (IQR) ou desvio padrão a partir da média.
+
+**2. Visualização de Dados**
+
+Gráficos como boxpltos, scatter plots e histogramas podem ajudar a identificar visualmente outliers.
+
+**3. Métodos de ML**
+
+Algotitmos específicos, como *Isolation Forest* ou DBSCAN, podem ser usados para detectar outliers, especialmente em conjuntos de dados complexos.
+
+**Tratamento de Outliers**
+
+**1. Avaliação**
+
+Determinar se o outlier é um erro ou uma variação natural. Em caso de erro, pode ser corrigido ou removido.
+
+**2. Transformação de Dados**
+
+Aplicar transformações, como logarítmica ou raiz quadrada, para reduzir o impacto de outliers.
+
+**3. Modelos Robustos**
+
+Usar modelos estatísticos ou de Machine Learning que são menos sensíveis a outliers.
+
+---
+
+### Técnicas de Detecção e Tratamento de Outliers
+
+**Técnicas de Detecção de Outliers**
+
+**1. Análise Gráfica**
+
+- Boxplot: pontos fora dos "bigodes" do gráfico;
+- Scatter Plot: pontos que caem fora dos padrões gerais dos dados;
+- Histograma: observação de distribuições anômalas ou separadas da maioria dos dados.
+
+**2. EStatísticas Descritivas**
+
+- Desvio Padrão: considera-se outliers os pontos que estão a um certo número de desvios padrões (geralmente 2 ou 3) da média;
+- Intervalo Interquartil (IQR): identifica-se outliers como aqueles valores abaixo de `Q1 - 1.5IQR` ou acima de `Q3 + 1.5IQR`.
+
+**3. Métodos de Distância**
+
+- Distância de Mahalanobis: identifica outliers com base na distância de um ponto em relação à distribuição dos dados;
+- Distância Euclidiana ou Outras Métricas: compara a distância entre pontos e um centro de dados (como a média).
+
+**4. Métodos Baseados em Densidade**
+
+- DBSCAN (Density-Based Spatial Clustering of Applications with Noise): algoritmo de clustering que pode identificar outliers como pontos que não pertencem a nenhum cluster.
+
+**5. Análise de Influência**
+
+- Alavancagem e Resíduos em Modelos de Regressão: identifica outliers com base em seu impacto no modelo estatístico.
+
+**Técnicas de Tratamento de Outliers**
+
+**1. Exclusão**
+
+Remover os outliers do conjunto de dados. Deve ser feito com cautela, somente se tiver certeza de que os pontos são erros ou irrelevantes.
+
+**2. Trasnformação**
+
+Aplicar transformações matemáticas (logarítmica, raiz quadrada, etc) para reduzir o impacto dos outiliers.
+
+**3. Imputação**
+
+Substituir outliers por valores medianos, médias, ou por meio de imputação baseada em modelos.
+
+**4. Capping (Limitação)**
+
+Limitar valores extremos a um certo limite definido (por exemplo, 1º e 99º percentis).
+
+**5. Modelos Robustos**
+
+Utilizar modelos estatísticos ou de ML que são menos sensíveis a outliers, como regressão robusta ou árvore de decisão.
+
+**6. Análise Separada**
+
+Analisar outliers separadamente do restante dos dados para entender suas características e impacto.
+
+**CONSIDERAÇÕES IMPORTANTES**
+
+- **Contexto dos Dados:** é importante entender o contexto em que os dados foram coletados. Em alguns casos, outilers podem representar informações valiosas e não devem ser automaticamente descartados;
+- **Natureza dos Outliers:** diferenciar entre outliers que são erros de dados e aqueles que são variações naturais são importantes;
+- **Impacto na Análise:** considerar como os outliers afetam os objetivos da análise e a interpretação dos resultados.
+
+---
+
+### Normalização e Escala de Dados
+
+Normalização e escalonamento de dados são técnicas usadas no pré-processamento de dados, especialmente em análises estatísticas e de machine learning, para padronizar a escala dos diferentes atributos ou variáveis.
+
+Essas técnicas são importantes porque muitos algoritmos de machine learning são sensíveis a variações na escala dos dados.
+
+**Normalização de Dados**
+
+Envolve ajustar os valores medidos em diferentes escalas para uma escala comum, geralmente uma escala entre 0 e 1.
+
+O objetivo é alterar os valores dos atributos numéricos para usar uma escala em comum, sem distorcer as diferenças nos intervalos de valores, ou perder informações.
+
+Uma técnica comum de normalização é a `normalização min-max`, onde os valores são reescalonados para que fiquem dentro do intervalo [0, 1].
+
+![](./imagens/normalizacao.png)
+
+A normalização é particularmente útil em situações onde os parâmetros precisam estar na mesma escala positiva. É frequentemente usado em algorítmos que dependem da medida da distância, como K-means e KNN.
+
+**Escalonamento de Dados**
+
+Escalonamento (ou padronização) de dados envolve transformar os dados para ter uma média de zero e um desvio padrão de um. Ao contrário da normalização, o escalonamento não vincula os valores a um intervalo específico.
+
+A padronização é realizada subtraindo a média dos dados e dividindo pelo desvio padrão:
+
+![](./imagens/escalonamento.png)
+
+O escalonamento é útil para algoritmos que assumem que todos os atributos estão centrados em torno de zero e têm variações com a mesma magnitude, como em regressão linear e logística, redes neurais e algoritmos baseados em gradiente.
+
+**Diferenças-Chave**
+
+- **Faixa de valores:** a normalização muda os valores para uma escala de 0 a 1, enquanto o escalonamento transforma os dados para ter uma média de 0 e um desvio padrão de 1;
+- **Preservação de outliers:** a normalização mantém a distribuição original dos dados, incluindo outliers. O escalonamento, por outro lado, é menos sensível a outliers.
+
+**CONSIDERAÇÕES FINAIS**
+
+- **Escolha da Técnica:** a escolha entre normalização e escalonamento depende do algoritmo específico que será utilizado e da natureza dos dados;
+- **Consistência:** é importante aplicar a mesma transformação a todos os pontos de dados (tanto de treinamento quanto de teste) para manter a consistência.
